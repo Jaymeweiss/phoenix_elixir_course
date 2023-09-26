@@ -3,3 +3,9 @@
     <li class="collection-item" :for={topic <- @topics}><%= topic.title %></li>
 </ul>
 
+<div class="fixed-action-btn">
+    <.link class="btn-floating btn-large waves-effect waves-light red" href={~p"/topics/new"}>
+        <i class="material-icons">add</i>
+    </.link>
+</div>
+

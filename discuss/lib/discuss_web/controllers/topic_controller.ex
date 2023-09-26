@@ -19,6 +19,8 @@ defmodule DiscussWeb.TopicController do
     |> Topic.changeset(topic_params)
     |> Repo.insert()
 
+    # How routes differ now:
+    # https://www.phoenixframework.org/blog/phoenix-1.7-final-released
     case result do
       {:ok, _topic} ->
         conn
