@@ -1,6 +1,10 @@
 <h2>Topics</h2>
 <ul class="collection">
-    <li class="collection-item" :for={topic <- @topics}><%= topic.title %></li>
+    <li class="collection-item" :for={topic <- @topics}><%= topic.title %>
+        <.link class="secondary-content" href={~p"/topics/#{topic.id}/edit"}>
+            <i class="material-icons">edit</i>
+        </.link>
+    </li>
 </ul>
 
 <div class="fixed-action-btn">
