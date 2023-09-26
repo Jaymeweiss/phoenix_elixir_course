@@ -1,6 +1,5 @@
 defmodule DiscussWeb.TopicController do
   use DiscussWeb, :controller
-  alias DiscussWeb.Router.Helpers, as: Routes
   alias Discuss.{Repo,Topic}
 
   def new(conn, _params) do
@@ -30,8 +29,28 @@ defmodule DiscussWeb.TopicController do
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Something went wrong when creating topic.")
-        |> render(:new, changeset: changeset)
+        |> render :new, changeset: changeset
+    end
+  end
 
+  def edit(conn, %{"id" => id}) do
+    topic = Repo.get(Topic, id)
+    changeset = Topic.changeset(topic)
+    render conn, :edit, topic: topic, changeset: changeset
+  end
+
+  def update(conn, %{"id" => id, "topic" => topic_params}) do
+    topic = Repo.get(Topic, id)
+    changeset = Topic.changeset(topic, topic_params)
+
+    case Repo.update(changeset) do
+      {:ok, topic} ->
+        conn
+        |> put_flash(:info, "Topic updated successfully.")
+        |> redirect(to: ~p"/")
+
+      {:error, changeset} ->
+        render conn, :edit, topic: topic, changeset: changeset
     end
   end
 end

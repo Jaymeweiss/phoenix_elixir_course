@@ -1,0 +1,7 @@
+<.simple_form :let={f} for={@changeset} action={~p"/topics/#{@topic.id}"}>
+  <.input field={f[:title]} type="text" placeholder="Title" />
+
+  <:actions>
+     <.button class="btn btn-primary">Save Topic</.button>
+  </:actions>
+</.simple_form>
