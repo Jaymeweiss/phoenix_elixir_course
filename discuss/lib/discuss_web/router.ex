@@ -20,8 +20,10 @@ defmodule DiscussWeb.Router do
     get "/", TopicController, :index
     get "/topics/new", TopicController, :new
     post "/topics", TopicController, :create
-    get "/topics/:id/edit", TopicController, :edit # :id functions as a wildcard matcher
+    get "/topics/:id/edit", TopicController, :edit # :id functions as a wildcard matcher and the result is available in the params map at that key
     put "/topics/:id", TopicController, :update
+    delete "/topics/:id", TopicController, :delete
+#    resources "/topics", TopicController # could use this but he had us break convention with the / route being the index for topics
   end
 
   # Other scopes may use custom stacks.

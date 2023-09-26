@@ -29,7 +29,7 @@ defmodule DiscussWeb.TopicController do
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Something went wrong when creating topic.")
-        |> render :new, changeset: changeset
+        |> render(:new, changeset: changeset)
     end
   end
 
@@ -44,7 +44,7 @@ defmodule DiscussWeb.TopicController do
     changeset = Topic.changeset(topic, topic_params)
 
     case Repo.update(changeset) do
-      {:ok, topic} ->
+      {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic updated successfully.")
         |> redirect(to: ~p"/")
@@ -52,5 +52,12 @@ defmodule DiscussWeb.TopicController do
       {:error, changeset} ->
         render conn, :edit, topic: topic, changeset: changeset
     end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    Repo.get!(Topic, id) |> Repo.delete! # Bang version of the delete function will raise an error if the record is not found
+    conn
+    |> put_flash(:info, "Topic deleted successfully.")
+    |> redirect(to: ~p"/")
   end
 end
