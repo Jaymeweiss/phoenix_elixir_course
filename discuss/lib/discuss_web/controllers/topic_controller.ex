@@ -20,7 +20,7 @@ defmodule DiscussWeb.TopicController do
     |> Repo.insert()
 
     case result do
-      {:ok, topic} ->
+      {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic created successfully.")
         |> redirect(to: Routes.topic_path(conn, :index))
