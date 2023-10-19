@@ -26,6 +26,12 @@ defmodule DiscussWeb.Router do
 #    resources "/topics", TopicController # could use this but he had us break convention with the / route being the index for topics
   end
 
+  scope "/auth", DiscussWeb do
+    pipe_through :browser # runs all the plugs from the browser pipeline
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", DiscussWeb do
   #   pipe_through :api
