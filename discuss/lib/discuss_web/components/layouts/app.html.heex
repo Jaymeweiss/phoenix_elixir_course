@@ -2,6 +2,17 @@
     <nav class="light-blue">
         <div class="nav-wrapper container">
             <a href="/" class="brand-logo">Discussions</a>
+            <ul class="right">
+                <%= if @conn.assigns[:user] do %>
+                    <.link href={~p"/auth/signout"}>
+                        <li>Sign Out</li>
+                    </.link>
+                <% else %>
+                    <.link href={~p"/auth/github"}>
+                        <li>Sign in with Github</li>
+                    </.link>
+                <% end %>
+            </ul>
         </div>
     </nav>
     <main class="px-4 py-20 sm:px-6 lg:px-8">
