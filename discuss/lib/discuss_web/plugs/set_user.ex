@@ -14,7 +14,6 @@ defmodule DiscussWeb.Plugs.SetUser do
   def call(conn, _opts) do
     user_id = get_session(conn, :user_id)
 
-    IO.inspect "SOMETHING ELSE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     # condition statement checks each condition specified
     cond do
       user = user_id && Repo.get(User, user_id) ->
