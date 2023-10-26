@@ -1,6 +1,7 @@
 defmodule DiscussWeb.TopicController do
   use DiscussWeb, :controller
   alias Discuss.{Repo,Topic}
+  import Ecto
 
   plug DiscussWeb.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
 
@@ -15,10 +16,10 @@ defmodule DiscussWeb.TopicController do
   end
 
   def create(conn, %{"topic" => topic_params}) do
-    # We use an empty record here because we are creating one here - would have included an id if we were updating an existing one
-    result = %Topic{}
-    |> Topic.changeset(topic_params)
-    |> Repo.insert()
+    result = conn.assigns.user
+      |> build_assoc(:topics) # produces a topic struct with the user_id set - we should not set the id manually
+      |> Topic.changeset(topic_params)
+      |> Repo.insert()
 
     # How routes differ now:
     # https://www.phoenixframework.org/blog/phoenix-1.7-final-released
