@@ -4,6 +4,7 @@ defmodule DiscussWeb.TopicController do
   import Ecto
 
   plug DiscussWeb.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
+  plug :check_topic_owner when action in [:edit, :update, :delete]
 
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{})
@@ -62,5 +63,17 @@ defmodule DiscussWeb.TopicController do
     conn
     |> put_flash(:info, "Topic deleted successfully.")
     |> redirect(to: ~p"/")
+  end
+
+  def check_topic_owner(%{params: %{"id" => id}} = conn, _params) do
+    topic = Repo.get(Topic, id)
+    if topic.user_id != conn.assigns.user.id do
+      conn
+      |> put_flash(:error, "You are not authorized to do that")
+      |> redirect(to: ~p"/")
+      |> halt()
+    else
+      conn
+    end
   end
 end

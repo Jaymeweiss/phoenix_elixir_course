@@ -1,12 +1,14 @@
 <h2>Topics</h2>
 <ul class="collection">
     <li class="collection-item" :for={topic <- @topics}><%= topic.title %>
-        <.link class="secondary-content" href={~p"/topics/#{topic.id}/edit"}>
-            <i class="material-icons">edit</i>
-        </.link>
-        <.link class="secondary-content" href={~p"/topics/#{topic.id}"} method="delete">
-            <i class="material-icons">delete</i>
-        </.link>
+        <%= if @conn.assigns.user.id == topic.user_id do %>
+            <.link class="secondary-content" href={~p"/topics/#{topic.id}/edit"}>
+                <i class="material-icons">edit</i>
+            </.link>
+            <.link class="secondary-content" href={~p"/topics/#{topic.id}"} method="delete">
+                <i class="material-icons">delete</i>
+            </.link>
+        <% end %>
     </li>
 </ul>
 
