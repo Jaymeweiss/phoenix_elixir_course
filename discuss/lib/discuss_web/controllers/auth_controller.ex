@@ -12,7 +12,6 @@ defmodule DiscussWeb.AuthController do
   end
 
   def signout(conn, _params) do
-
     conn
     |> configure_session(drop: true) # drops all of the session content - no trace of the user on the session
     |> put_flash(:info, "Signed out")
