@@ -16,6 +16,11 @@ defmodule DiscussWeb.TopicController do
     render conn, :index, topics: topics
   end
 
+  def show(conn, %{"id" => id}) do
+    topic = Repo.get!(Topic, id)
+    render conn, :show, topic: topic
+  end
+
   def create(conn, %{"topic" => topic_params}) do
     result = conn.assigns.user
       |> build_assoc(:topics) # produces a topic struct with the user_id set - we should not set the id manually

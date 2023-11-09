@@ -1,6 +1,9 @@
 <h2>Topics</h2>
 <ul class="collection">
-    <li class="collection-item" :for={topic <- @topics}><%= topic.title %>
+    <li class="collection-item" :for={topic <- @topics}>
+        <.link href={~p"/topics/#{topic.id}"}>
+            <%= topic.title %>
+        </.link>
         <%= if @conn.assigns.user.id == topic.user_id do %>
             <.link class="secondary-content" href={~p"/topics/#{topic.id}/edit"}>
                 <i class="material-icons">edit</i>
