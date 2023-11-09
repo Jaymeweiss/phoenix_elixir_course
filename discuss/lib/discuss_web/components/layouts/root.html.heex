@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
+    <script>
+       <%= if @conn.assigns.user do %>
+            window.userToken = "<%= Phoenix.Token.sign(@conn, "key", @conn.assigns.user.id) %>"
+        <% end %>
+    </script>
   </head>
   <body class="bg-white antialiased">
     <%= @inner_content %>
